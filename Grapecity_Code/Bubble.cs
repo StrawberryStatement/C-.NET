@@ -9,8 +9,11 @@ namespace Grapecity_Code
     class Bubble : ISort
     {
         List<int> initArray = new List<int>();
+        List<int> locArray = new List<int>();
+        
         Queue<int[]> arrayState = new Queue<int[]>();
         int sortedSeries;//交换排序中已确定好位置的元素。
+        int swapCount = 0;
         /// <summary>
         /// 获取当前序列值
         /// </summary>
@@ -29,6 +32,13 @@ namespace Grapecity_Code
             get
             {
                 return sortedSeries;
+            }
+        }
+        public int getSwapCount
+        {
+            get
+            {
+                return swapCount;
             }
         }
         /// <summary>
@@ -64,9 +74,12 @@ namespace Grapecity_Code
                         int temp = initArray[i];
                         initArray[i] = initArray[j];
                         initArray[j] = temp;
-                        initArray.Add(i);   //队列中加入需要交换的元素位置；
-                        initArray.Add(j);
-                        arrayState.Enqueue(initArray.ToArray());//List 引用不能直传
+                        initArray.ForEach(data=>locArray.Add(data));
+                        locArray.Add(i);   //队列中加入需要交换的元素位置；
+                        locArray.Add(j);
+                        arrayState.Enqueue(locArray.ToArray());//List 引用不能直传
+                        locArray.Clear();
+                        swapCount++;
                         Change = true;
                     }
                 }               
