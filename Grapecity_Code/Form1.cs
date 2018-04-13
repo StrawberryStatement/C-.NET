@@ -20,6 +20,7 @@ namespace Grapecity_Code
         Series series = new Series();
         static int globalSortSequence = 0;
         List<int> sortedSeries = new List<int>();
+        int swapCount;
         public GrapeCity()
         {
             InitializeComponent();
@@ -31,7 +32,7 @@ namespace Grapecity_Code
         private void Init()
         {
             GetArray();
-            sortedArray.Add(arrayToSort.ToArray());
+            //sortedArray.Add(arrayToSort.ToArray());
         }
         /// <summary>
         /// 排序
@@ -42,6 +43,7 @@ namespace Grapecity_Code
             sortInstance.Sort();
             sortedQueue = sortInstance.arrayNow;
             sortedSeries.Add(sortInstance.getSortedSeries);
+            swapCount = sortInstance.getSwapCount;
             while (sortedQueue.Count > 0)
             {
                 sortedArray.Add(sortedQueue.Dequeue());
@@ -57,16 +59,20 @@ namespace Grapecity_Code
             series = new Series("排序结果");
             series.ChartType = SeriesChartType.Column;
 
-            for (int i = 0; i < sortedArray[sortSequence].Length-2; i++)
+            for (int i = 0; i < sortedArray[sortSequence].Length-2; i++)//应该是-2
             {
                 series.Points.Add(sortedArray[sortSequence][i]);//arraylist需要拆装箱检查
-                //ToDo：修改不同颜色表示当前排序
-                foreach(int sortedLoc in sortedSeries)
-                {
-                    series.Points[sortedLoc].Color = Color.Gold;
-                }
-                series.Points[sortedArray[sortSequence].Length - 2].Color = Color.Red;
+
             }
+            if (sortedArray[sortSequence][sortedArray[sortSequence].Length - 2] != 255 && sortedArray[sortSequence][sortedArray[sortSequence].Length - 1] != 255)
+            {
+                series.Points[sortedArray[sortSequence][sortedArray[sortSequence].Length - 2]].Color = Color.Red;
+                series.Points[sortedArray[sortSequence][sortedArray[sortSequence].Length - 1]].Color = Color.Red;
+            }
+            //foreach (int sortedLoc in sortedSeries)
+            //{
+            //    series.Points[sortedLoc].Color = Color.Gold;
+            //}
             chart1.Series.Add(series);
         }
         /// <summary>
@@ -87,7 +93,7 @@ namespace Grapecity_Code
         private void button1_Click(object sender, EventArgs e)
         {
             GetArray();
-            sortedArray.Add(arrayToSort.ToArray());
+            //sortedArray.Add(arrayToSort.ToArray());
             Sort();
             globalSortSequence = 0;
             ReDrawing(globalSortSequence);  
