@@ -24,7 +24,7 @@ namespace Grapecity_Code
         public GrapeCity()
         {
             InitializeComponent();
-            Init();    
+            Init();
         }
         /// <summary>
         /// 初始化软件配置
@@ -32,7 +32,6 @@ namespace Grapecity_Code
         private void Init()
         {
             GetArray();
-            //sortedArray.Add(arrayToSort.ToArray());
         }
         /// <summary>
         /// 排序
@@ -42,7 +41,6 @@ namespace Grapecity_Code
             Bubble sortInstance = new Bubble(arrayToSort.ToList());
             sortInstance.Sort();
             sortedQueue = sortInstance.arrayNow;
-            sortedSeries.Add(sortInstance.getSortedSeries);
             swapCount = sortInstance.getSwapCount;
             while (sortedQueue.Count > 0)
             {
@@ -64,15 +62,12 @@ namespace Grapecity_Code
                 series.Points.Add(sortedArray[sortSequence][i]);//arraylist需要拆装箱检查
 
             }
+            //sortedArray后两位元素储存当前正在比对的两个数值
             if (sortedArray[sortSequence][sortedArray[sortSequence].Length - 2] != 255 && sortedArray[sortSequence][sortedArray[sortSequence].Length - 1] != 255)
             {
                 series.Points[sortedArray[sortSequence][sortedArray[sortSequence].Length - 2]].Color = Color.Red;
                 series.Points[sortedArray[sortSequence][sortedArray[sortSequence].Length - 1]].Color = Color.Red;
             }
-            //foreach (int sortedLoc in sortedSeries)
-            //{
-            //    series.Points[sortedLoc].Color = Color.Gold;
-            //}
             chart1.Series.Add(series);
         }
         /// <summary>
